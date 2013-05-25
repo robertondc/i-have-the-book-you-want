@@ -34,7 +34,7 @@ describe BooksController do
       expect(response).to render_template('edit')
     end
 
-    it "redirects to the root page when the current user is not the owner of book" do      
+    it "redirects to the root page when the current user is not the owner of book" do
       user = FactoryGirl.create(:user)
       sign_in FactoryGirl.create(:another_user)
       get :edit, id: FactoryGirl.create(:book, user:user)
@@ -44,20 +44,35 @@ describe BooksController do
   end
   
   describe "GET show_user" do
-    it "show the books only from specified username" do
+    
+    it "show the books only from specified username for logged users" do
       user = FactoryGirl.create(:user)
       sign_in user
-      get :show_user, username: user.username  
+      book = FactoryGirl.create(:book, user:user)
+      another_book = FactoryGirl.create(:book)
+      get :show_user, username: user.username 
       expect(response).to render_template('index')
+      assigns(:books).should eq([book])
     end
 
-    it "show a error message for invalid usernames without change the url" do
+    it "show the books only from specified username for unlogged users too" do
+      user = FactoryGirl.create(:user)
+      sign_out user
+      book = FactoryGirl.create(:book, user:user)
+      another_book = FactoryGirl.create(:book)
+      get :show_user, username: user.username 
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book])
+    end
+
+    it "show a error message for invalid usernames without change the url and with no itens returned" do
       sign_in FactoryGirl.create(:user)
-      get :show_user, username: '_invalid_username_'  
+      get :show_user, username: '_invalid_username_'
       expect(response).to render_template('index')
       expect(response.body).to match /#{I18n.t('users.not_found')}/m
+      assigns(:books).should eq([])
     end
-
+    
   end
   
 end

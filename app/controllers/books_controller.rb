@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:shiw]
+  before_filter :authenticate_user!, :except => [:show_user]
   
   # GET /books
   # GET /books.json
