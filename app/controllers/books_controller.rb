@@ -1,11 +1,11 @@
 class BooksController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:shiw]
   
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @books = current_user.books
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,10 +16,15 @@ class BooksController < ApplicationController
   # GET /user/roberto/books
   def show_user
     @user = User.find_by_username(params[:username])
-    @books = @user.books if @user
+    if @user
+      @books = @user.books
+    else
+      flash.now[:error] = t('users.not_found')
+      @books = []
+    end
     respond_to do |format|
-      format.html {render action: 'index' }
-      format.json { render json: @books }
+        format.html {render action: 'index' }
+        format.json { render json: @books }
     end
   end
 
@@ -33,16 +38,6 @@ class BooksController < ApplicationController
       format.json { render json: @book }
     end
   end
-
-  def show
-    @book = Book.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @book }
-    end
-  end
-
 
   # GET /books/new
   # GET /books/new.json
@@ -58,13 +53,18 @@ class BooksController < ApplicationController
   # GET /books/1/edit
   def edit
     @book = Book.find(params[:id])
+    unless owner?(@book)
+      respond_to do |format|
+        format.html { redirect_to root_url  }
+      end
+    end
   end
 
   # POST /books
   # POST /books.json
   def create
     @book = Book.new(params[:book])
-
+    @book.user = current_user
     respond_to do |format|
       if @book.save
         format.html { redirect_to @book, notice: 'Book was successfully created.' }
