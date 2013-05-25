@@ -9,7 +9,7 @@
   <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
   <dd><%= @book.title %></dd>
   <dt><strong><%= model_class.human_attribute_name(:language) %>:</strong></dt>
-  <dd><%= @book.language %></dd>
+  <dd><%= t("books.language.#{@book.language}") %></dd>
 </dl>
 
 <div class="form-actions">
