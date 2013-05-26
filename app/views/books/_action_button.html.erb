@@ -1,0 +1,16 @@
+<div class="btn-group">
+  <a class="btn btn-warning  dropdown-toggle" data-toggle="dropdown" href="#">
+    <%= t("books.actions.action") %>
+    <span class="caret"></span>
+  </a>
+	<ul class="dropdown-menu">
+    <li><a href="#"><%= t("books.actions.send_to") %></a></li>
+    <li class="divider"></li>
+    <li><%= link_to t("books.actions.delete"),
+                  book_path(book),
+                  :method => :delete,
+                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }%></li>
+    <li><%= link_to t("books.actions.edit"),
+                  edit_book_path(book) %></li>
+  </ul>
+</div>

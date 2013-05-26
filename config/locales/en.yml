@@ -3,10 +3,17 @@
 
 en:
   hello: "Hello world"
+  login: 'log in'
+  logoff: 'log off %{user}'
   books:
     language:
         pt_br: Portuguese
         en: English
+    actions:
+        action: Action
+        send_to: Send to...
+        edit: Edit
+        delete: Delete
   users:
       not_found: User not found
   activerecord:
@@ -17,4 +24,7 @@ en:
         author: Author
         title: Title
         language: Language
-        created_at: Added
+        created_at: Date
+  time:
+    formats:
+      default: ! '%m/%d/%Y %H:%M'

@@ -51,7 +51,7 @@ describe BooksController do
       book = FactoryGirl.create(:book, user:user)
       another_book = FactoryGirl.create(:book)
       get :show_user, username: user.username 
-      expect(response).to render_template('index')
+      expect(response).to render_template('show_user')
       assigns(:books).should eq([book])
     end
 
@@ -61,14 +61,14 @@ describe BooksController do
       book = FactoryGirl.create(:book, user:user)
       another_book = FactoryGirl.create(:book)
       get :show_user, username: user.username 
-      expect(response).to render_template('index')
+      expect(response).to render_template('show_user')
       assigns(:books).should eq([book])
     end
 
     it "show a error message for invalid usernames without change the url and with no itens returned" do
       sign_in FactoryGirl.create(:user)
       get :show_user, username: '_invalid_username_'
-      expect(response).to render_template('index')
+      expect(response).to render_template('show_user')
       expect(response.body).to match /#{I18n.t('users.not_found')}/m
       assigns(:books).should eq([])
     end
