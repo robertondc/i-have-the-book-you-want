@@ -2,10 +2,12 @@ class BooksController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show_user]
   
+  helper_method :sort_column, :sort_direction
+  
   # GET /books
   # GET /books.json
   def index
-    @books = current_user.books
+    @books = current_user.books.order(sort_column + " " + sort_direction)
     @user = current_user
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +19,7 @@ class BooksController < ApplicationController
   def show_user
     @user = User.find_by_username(params[:username])
     if @user
-      @books = @user.books
+      @books = @user.books.order(sort_column + " " + sort_direction)
     else
       flash.now[:error] = t('users.not_found')
       @books = []
@@ -103,4 +105,15 @@ class BooksController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private 
+  
+  def sort_column
+    Book.column_names.include?(params[:sort]) ?  params[:sort] : 'title'
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction]  : 'asc'
+  end
+  
 end

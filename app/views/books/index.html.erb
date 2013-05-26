@@ -5,10 +5,10 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:author) %></th>
-      <th><%= model_class.human_attribute_name(:title) %></th>
-      <th><%= model_class.human_attribute_name(:language) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= sortable('author', model_class.human_attribute_name(:author) ) %> </th>
+      <th><%= sortable('title', model_class.human_attribute_name(:title) )%></th>
+      <th><%= sortable('language', model_class.human_attribute_name(:language) )%></th>
+      <th><%= sortable('created_at', model_class.human_attribute_name(:created_at) )%></th>
       <th></th>
     </tr>
   </thead>
