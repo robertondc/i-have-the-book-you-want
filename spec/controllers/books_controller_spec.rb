@@ -16,6 +16,57 @@ describe BooksController do
       get :index
       expect(response).to render_template('index')
     end
+    
+    it "must to sort with 'title asc' by default" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, title: '2')
+      book2 = FactoryGirl.create(:book, user:user, title: '1')
+      get :index
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book2,book1])
+    end
+
+    it "must to sort according specified column name with 'asc' direction by default" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, author: '2')
+      book2 = FactoryGirl.create(:book, user:user, author: '1')
+      get :index, sort: 'author'
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book2,book1])
+    end
+
+    it "must to sort according specified column name and direction" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, author: '2')
+      book2 = FactoryGirl.create(:book, user:user, author: '1')
+      get :index, sort: 'author', direction: 'desc'
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book1,book2])
+    end
+
+    it "must to sort with 'title' when specified a missing column" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, title: '2')
+      book2 = FactoryGirl.create(:book, user:user, title: '1')
+      get :index, sort: '_invalid_colum_', direction: 'asc'
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book2,book1])
+    end
+
+    it "must to sort with 'asc' when specified a missing direction" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, title: '2')
+      book2 = FactoryGirl.create(:book, user:user, title: '1')
+      get :index, sort: 'title', direction: '_invalid_direction_'
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book2,book1])
+    end
+
   end
 
   describe "GET edit" do
@@ -73,6 +124,56 @@ describe BooksController do
       assigns(:books).should eq([])
     end
     
+    it "must to sort with 'title asc' by default" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, title: '2')
+      book2 = FactoryGirl.create(:book, user:user, title: '1')
+      get :show_user, username: user.username 
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book2,book1])
+    end
+
+    it "must to sort according specified column name with 'asc' direction by default" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, author: '2')
+      book2 = FactoryGirl.create(:book, user:user, author: '1')
+      get :show_user, username: user.username , sort: 'author'
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book2,book1])
+    end
+
+    it "must to sort according specified column name and direction" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, author: '2')
+      book2 = FactoryGirl.create(:book, user:user, author: '1')
+      get :show_user, username: user.username , sort: 'author', direction: 'desc'
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book1,book2])
+    end
+
+    it "must to sort with 'title' when specified a missing column" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, title: '2')
+      book2 = FactoryGirl.create(:book, user:user, title: '1')
+      get :show_user, username: user.username , sort: '_invalid_colum_', direction: 'asc'
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book2,book1])
+    end
+
+    it "must to sort with 'asc' when specified a missing direction" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+      book1 = FactoryGirl.create(:book, user:user, title: '2')
+      book2 = FactoryGirl.create(:book, user:user, title: '1')
+      get :show_user, username: user.username , sort: 'title', direction: '_invalid_direction_'
+      expect(response).to render_template('index')
+      assigns(:books).should eq([book2,book1])
+    end
+    
   end
-  
+    
 end
