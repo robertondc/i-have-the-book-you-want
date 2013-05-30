@@ -18,4 +18,9 @@ FactoryGirl.define do
     user = :user
   end
 
+  factory :request do
+    book = :book
+    user = :user
+  end
+
 end

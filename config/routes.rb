@@ -1,6 +1,8 @@
 IHaveTheBookYouWant::Application.routes.draw do
-  resources :books
-  
+  resources :books do
+    resource :request
+  end  
+    
   devise_for :users  
   
   match 'user/:username/books' => 'books#show_user', :as => :user_books, :via => :get

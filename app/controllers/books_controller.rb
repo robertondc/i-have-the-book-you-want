@@ -12,6 +12,7 @@ class BooksController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @books }
+      format.js { @books }
     end
   end
 
@@ -27,6 +28,7 @@ class BooksController < ApplicationController
     respond_to do |format|
         format.html {render action: 'index' }
         format.json { render json: @books }
+        format.js { render action: 'index' }
     end
   end
 

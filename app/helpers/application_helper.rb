@@ -11,6 +11,7 @@ module ApplicationHelper
     title ||= column.titleize 
     direction = column == sort_column && sort_direction == 'asc' ? 'desc' : 'asc'
     arrow_current = sort_direction == 'asc' ? '<i class="icon-chevron-up"></i>' : '<i class="icon-chevron-down"></i>' if column == sort_column
-    link_to ("#{title} #{arrow_current}").html_safe, {sort: column, direction: direction}
+    link_to ("#{title} #{arrow_current}").html_safe, {sort: column, direction: direction}, remote: true
   end  
+  
 end

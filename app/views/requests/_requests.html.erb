@@ -1,0 +1,11 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= sortable('users.username', User.human_attribute_name(:username) ) %> </th>
+      <th><%= sortable('created_at', Request.human_attribute_name(:created_at) ) %> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: 'request', collection: @requests %>
+  </tbody>
+</table>

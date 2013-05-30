@@ -1,0 +1,25 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= sortable('author', Book.human_attribute_name(:author) ) %> </th>
+      <th><%= sortable('title', Book.human_attribute_name(:title) )%></th>
+      <th><%= sortable('language', Book.human_attribute_name(:language) )%></th>
+      <th><%= sortable('created_at', Book.human_attribute_name(:created_at) )%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: 'book', collection: @books %>
+  </tbody>
+</table>
+
+<div id="requests-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%=t 'book.requests' %></h3>
+  </div>
+  <div class="modal-body" id="requests-list">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>

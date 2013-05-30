@@ -14,17 +14,26 @@ en:
         send_to: Send to...
         edit: Edit
         delete: Delete
+    requests: Requests
+    no_requests: No requests
+    request: Request
   users:
       not_found: User not found
   activerecord:
     models:
       book: Book
+      request: Request
+      user: User
     attributes:
       book:
         author: Author
         title: Title
         language: Language
         created_at: Date
+      request:
+        created_at: Date
+      user:
+        username: Username
   time:
     formats:
       default: ! '%m/%d/%Y %H:%M'

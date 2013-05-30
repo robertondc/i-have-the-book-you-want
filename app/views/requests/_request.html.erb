@@ -1,0 +1,4 @@
+<tr id="request_<%=request.id%>">
+  <td><%=link_to request.user.username, user_books_path(request.user.username) %></td>
+  <td><%=l request.created_at %></td>
+</tr>
