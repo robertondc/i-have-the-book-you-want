@@ -1,4 +1,14 @@
 <tr id="request_<%=request.id%>">
   <td><%=link_to request.user.username, user_books_path(request.user.username) %></td>
-  <td><%=l request.created_at %></td>
+  <td><%= time_ago_in_words (request.created_at) %></td>
+  <td>
+<% if owner?(request) %>
+	<%= link_to book_request_path(request.book,request),
+					remote: true,
+	                :method => :delete,
+	                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, class: 'btn btn-danger' do %>
+	<i class="icon-trash"></i> <%= t("books.actions.delete") %>
+	<% end %>
+<% end %>
+</td>
 </tr>

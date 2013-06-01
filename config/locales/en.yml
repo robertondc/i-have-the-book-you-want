@@ -17,6 +17,9 @@ en:
     requests: Requests
     no_requests: No requests
     request: Request
+    requests_from: Requests from 
+  requests:
+    no_available: No requests available
   users:
       not_found: User not found
   activerecord:

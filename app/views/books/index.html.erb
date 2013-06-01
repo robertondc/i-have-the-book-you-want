@@ -5,6 +5,7 @@
 <div id="books-list">
 	<%= render partial:'books' if @books.any? %>
 </div>
+
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_book_path,
             :class => 'btn btn-primary' if @user == current_user %>

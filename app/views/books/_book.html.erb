@@ -2,10 +2,10 @@
   <td><%= book.author %></td>
   <td><%= book.title %></td>
   <td><%=t "books.language.#{book.language}" %></td>
-  <td><%=l book.created_at %></td>
+  <td><%=time_ago_in_words(book.created_at) %></td>
   <td>
 		<% if book.requests.count > 0 %>
-			<%= link_to book_request_path(book), {class: "btn btn-info", remote: true, :'data-toggle'=> "modal", :'data-target'=>"#requests-modal"} do %>
+			<%= link_to book_requests_path(book), {class: "btn btn-info", remote: true, :'data-toggle'=> "modal", :'data-target'=>"#requests-modal"} do %>
 				<i class="icon-list-alt"></i> <%=t 'books.requests' %>: <%= book.requests.count%>
 			<% end %>
 		<% else %>
@@ -15,7 +15,7 @@
 		<% end %>
 
 		<% if request_available?(book) %>
-			<%= link_to book_request_path(book), {class: "btn btn-success", remote: true, method: 'post'} do %>
+			<%= link_to book_requests_path(book), {class: "btn btn-success", remote: true, method: 'post'} do %>
 				<i class="icon-magnet"></i> <%=t 'books.request' %>
 			<% end %>
 		<% end %>

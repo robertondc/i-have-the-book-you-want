@@ -22,7 +22,7 @@ class RequestsController < ApplicationController
     end
   end
 
-  def show
+  def index
     @book = Book.find(params[:book_id])
     @requests = @book.requests.joins(:user).order(sort_column + " " + sort_direction)
     respond_to do |format|
@@ -32,6 +32,19 @@ class RequestsController < ApplicationController
     end
   end
   
+  def destroy
+    @book = Book.find(params[:book_id])
+    @request = Request.find(params[:id])
+    @request.destroy
+    @requests = @book.requests
+    respond_to do |format|
+      format.html { redirect_to books_url }
+      format.json { head :no_content }
+      format.js { }
+    end
+  end
+  
+  
   private 
   
   def sort_column
@@ -39,7 +52,7 @@ class RequestsController < ApplicationController
   end
   
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction]  : 'asc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction]  : 'desc'
   end
 
 end

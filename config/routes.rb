@@ -1,6 +1,6 @@
 IHaveTheBookYouWant::Application.routes.draw do
   resources :books do
-    resource :request
+    resources :requests
   end  
     
   devise_for :users  
